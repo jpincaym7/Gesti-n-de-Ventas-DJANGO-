@@ -1,0 +1,41 @@
+{% extends 'navbar.html' %}
+{% block title %}Home Page{% endblock title %}
+{% block content %}
+    {% load static %}
+    <div class="hero min-h-screen bg-base-200">
+        <div class="hero-content flex-col lg:flex-row">
+          <img src="{% static "img\nike-forward-9.jpg" %}" class="max-w-sm rounded-lg shadow-2xl" alt="Imagen de ropa" />
+          <div>
+            <h1 class="text-5xl font-bold">PyShop</h1>
+            <p class="py-6">En PyShop encontrarás las mejores marcas de ropa, entre estas tenemos a
+                {% for brand in brands %}
+                    {{ brand.description }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+            <a href="{% url 'core:product_list' %}">
+                <button class="btn btn-primary">Explorar Colecciones</button>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+    <!-- Sección de productos -->
+    <div class="flex">
+        <!-- Sección de jeans -->
+        <div class="w-1/2 p-4 flex items-center justify-center">
+            <a href="{% url 'core:product_list' %}?brand_id=1" class="flex flex-col items-center">
+                <!-- Ajustar el tamaño de la imagen -->
+                <img src="{% static jeans %}" alt="Jeans" class="w-full h-auto mb-2">
+                <span class="text-center">{{ brand.description }}</span>
+            </a>
+        </div>
+        <!-- Sección de marcas -->
+        <div class="w-1/2 p-4">
+            <div class="grid grid-cols-2 gap-4">
+                {% for img in marcas  %}
+                    <img src="{% static img %}" alt="Marcas" class="w-full h-48 object-cover mb-4">
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}

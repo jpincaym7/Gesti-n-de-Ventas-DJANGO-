@@ -1,0 +1,39 @@
+<!-- templates/core/shop/invoice_detail.html -->
+{% extends "navbar.html" %}
+{% block content %}
+<div class="container mx-auto py-8">
+    <div class="bg-white rounded-lg shadow overflow-hidden max-w-md mx-auto">
+        <div class="px-6 py-4">
+            <h1 class="text-xl font-bold mb-2">Invoice Details</h1>
+            <p class="text-gray-600">Invoice ID: {{ invoice.id }}</p>
+            <p class="text-gray-600">Customer: {{ invoice.customer }}</p>
+            <!-- Agregar otros detalles de la factura aquí -->
+        </div>
+        <div class="border-t border-gray-200 px-6 py-4">
+            <h2 class="text-lg font-semibold mb-2">Invoice Items</h2>
+            <table class="w-full">
+                <thead>
+                    <tr>
+                        <th class="text-left py-2">Product</th>
+                        <th class="text-left py-2">Quantity</th>
+                        <th class="text-left py-2">Price</th>
+                        <th class="text-left py-2">Subtotal</th>
+                        <th class="text-left py-2">IVA</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for detail in details %}
+                    <tr>
+                        <td class="text-left py-2">{{ detail.product }}</td>
+                        <td class="text-left py-2">{{ detail.quantity }}</td>
+                        <td class="text-left py-2">${{ detail.price }}</td>
+                        <td class="text-left py-2">${{ detail.subtotal }}</td>
+                        <td class="text-left py-2">${{ detail.iva }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

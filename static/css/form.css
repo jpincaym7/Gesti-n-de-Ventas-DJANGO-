@@ -1,0 +1,40 @@
+/* Estilos personalizados para el formulario */
+.form-control {
+    margin-bottom: 1rem; /* Margen inferior entre los campos del formulario */
+}
+
+/* Estilos para las etiquetas de los campos */
+.form-control label {
+    display: block; /* Mostrar la etiqueta como un bloque */
+    font-weight: bold; /* Texto en negrita para las etiquetas */
+    margin-bottom: 0.5rem; /* Margen inferior entre la etiqueta y el campo */
+}
+
+/* Estilos para los campos de entrada */
+.form-control input[type="text"],
+.form-control input[type="number"],
+.form-control select,
+.form-control textarea,
+.form-control input[type="checkbox"] {
+    width: 100%; /* Ancho completo del campo */
+    padding: 0.5rem; /* Espacio interno dentro del campo */
+    border: 1px solid #ced4da; /* Borde del campo */
+    border-radius: 0.25rem; /* Borde redondeado del campo */
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; /* Transición suave para cambios de borde */
+}
+
+/* Estilos para los campos de entrada cuando están enfocados */
+.form-control input[type="text"]:focus,
+.form-control input[type="number"]:focus,
+.form-control select:focus,
+.form-control textarea:focus,
+.form-control input[type="checkbox"]:focus {
+    border-color: #80bdff; /* Cambio de color del borde al enfocar */
+    outline: 0; /* Eliminar el resaltado predeterminado al enfocar */
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Sombra alrededor del campo al enfocar */
+}
+
+/* Estilos para los botones dentro del formulario */
+.form-control button {
+    margin-top: 0.5rem; /* Margen superior para separar los botones del formulario */
+}

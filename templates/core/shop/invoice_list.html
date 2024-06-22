@@ -1,0 +1,110 @@
+{% extends "navbar.html" %}
+
+{% block content %}
+<div class="mt-8">
+  <label for="invoice_id" class="block text-sm font-medium text-gray-700">Selecciona un ID de factura:</label>
+  <div class="mt-1">
+    <select id="invoice_id" name="invoice_id" class="form-select block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+      {% for invoice in invoices %}
+      <option value="{{ invoice.id }}">{{ invoice.id }}</option>
+      {% endfor %}
+    </select>
+  </div>
+</div>
+<div class="mt-4">
+  <button id="selectButton" type="button" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md font-semibold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+    </svg>
+    <span>Seleccionar</span>
+  </button>
+</div>
+
+<div class="container mx-auto py-8" id="invoiceDetails">
+  <!-- Aquí se mostrará la información de la factura seleccionada -->
+</div>
+
+<script>
+  document.getElementById('selectButton').onclick = function() {
+    var selectedInvoiceId = document.getElementById('invoice_id').value;
+    showInvoiceDetails(selectedInvoiceId);
+  };
+
+  function showInvoiceDetails(invoiceId) {
+    fetch('/get_invoice_details?invoice_id=' + invoiceId)
+      .then(response => response.json())
+      .then(data => {
+        var detailsDiv = document.getElementById('invoiceDetails');
+        var detailsHtml = `
+          <div class="bg-white rounded-lg shadow-lg px-8 py-10 max-w-xl mx-auto">
+            <div class="flex items-center justify-between mb-8">
+              <div class="flex items-center">
+                <img class="h-8 w-8 mr-2" src="https://tailwindflex.com/public/images/logos/favicon-32x32.png" alt="Logo" />
+                <div class="text-gray-700 font-semibold text-lg">SEMEN DE BURRO C.A</div>
+              </div>
+              <div class="text-gray-700">
+                <div class="font-bold text-xl mb-2">INVOICE</div>
+                <div class="text-sm">Date: ${new Date().toLocaleDateString()}</div>
+                <div class="text-sm">Invoice #: ${data.id}</div>
+              </div>
+            </div>
+            <div class="border-b-2 border-gray-300 pb-8 mb-8">
+              <h2 class="text-2xl font-bold mb-4">Bill To:</h2>
+              <div class="flex items-center mb-4">
+                <img class="h-16 w-16 rounded-full mr-4" src="${data.customer.image}" alt="${data.customer.name}" />
+                <div>
+                  <div class="text-gray-700 mb-2">${data.customer.name}</div>
+                  <div class="text-gray-700 mb-2">${data.customer.address}</div>
+                  <div class="text-gray-700 mb-2">${data.customer.correo}</div>
+                </div>
+              </div>
+            </div>
+            <table class="w-full text-left mb-8">
+              <thead>
+                <tr>
+                  <th class="text-gray-700 font-bold uppercase py-2">Description</th>
+                  <th class="text-gray-700 font-bold uppercase py-2">Quantity</th>
+                  <th class="text-gray-700 font-bold uppercase py-2">Price</th>
+                  <th class="text-gray-700 font-bold uppercase py-2">Total</th>
+                </tr>
+              </thead>
+              <tbody>`;
+
+        data.details.forEach(detail => {
+          detailsHtml += `
+                <tr>
+                  <td class="py-4 text-gray-700">${detail.product_name}</td>
+                  <td class="py-4 text-gray-700">${detail.quantity}</td>
+                  <td class="py-4 text-gray-700">$${detail.price.toFixed(2)}</td>
+                  <td class="py-4 text-gray-700">$${detail.total.toFixed(2)}</td>
+                </tr>`;
+        });
+
+        detailsHtml += `
+              </tbody>
+            </table>
+            <div class="flex justify-end mb-8">
+              <div class="text-gray-700 mr-2">Subtotal:</div>
+              <div class="text-gray-700">$${data.subtotal.toFixed(2)}</div>
+            </div>
+            <div class="text-right mb-8">
+              <div class="text-gray-700 mr-2">Tax:</div>
+              <div class="text-gray-700">$${data.tax.toFixed(2)}</div>
+            </div>
+            <div class="flex justify-end mb-8">
+              <div class="text-gray-700 mr-2">Total:</div>
+              <div class="text-gray-700 font-bold text-xl">$${data.total.toFixed(2)}</div>
+            </div>
+            <div class="border-t-2 border-gray-300 pt-8 mb-8">
+              <div class="text-gray-700 mb-2">Payment is due within 30 days. Late payments are subject to fees.</div>
+              <div class="text-gray-700 mb-2">Please make checks payable to Your Company Name and mail to:</div>
+              <div class="text-gray-700">123 Main St., Anytown, USA 12345</div>
+            </div>
+          </div>
+        `;
+
+        detailsDiv.innerHTML = detailsHtml;
+      });
+  }
+</script>
+{% endblock content %}

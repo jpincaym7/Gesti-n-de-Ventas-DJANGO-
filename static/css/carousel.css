@@ -1,0 +1,41 @@
+
+
+/* styles.css */
+.card {
+    width: 300px; /* Ajusta el ancho de la tarjeta según tus necesidades */
+    height: auto; /* Ajusta la altura automáticamente según el contenido */
+    border-radius: 10px; /* Redondea las esquinas de la tarjeta */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Agrega una sombra para dar profundidad */
+    overflow: hidden; /* Evita que el contenido se desborde */
+  }
+
+  .card-img img {
+    width: 100%; /* Ajusta la imagen al ancho de la tarjeta */
+    height: auto; /* Ajusta automáticamente la altura */
+    border-top-left-radius: 10px; /* Redondea solo las esquinas superiores de la imagen */
+    border-top-right-radius: 10px;
+    object-fit: cover; /* Ajusta la imagen dentro de su contenedor */
+  }
+
+  .card-body {
+    padding: 20px; /* Añade espacio interno */
+  }
+
+  .card p {
+    margin: 0; /* Elimina el margen de los párrafos dentro de la tarjeta */
+  }
+
+  .card-actions {
+    padding: 20px;
+    display: flex;
+    justify-content: flex-end; /* Alinea los botones a la derecha */
+  }
+
+  .btn-primary {
+    background-color: #007bff; /* Cambia el color de fondo */
+    color: #fff; /* Cambia el color del texto */
+    border: none; /* Elimina el borde */
+    padding: 10px 20px; /* Ajusta el relleno */
+    border-radius: 5px; /* Redondea las esquinas */
+    cursor: pointer; /* Cambia el cursor al pasar el ratón */
+  }

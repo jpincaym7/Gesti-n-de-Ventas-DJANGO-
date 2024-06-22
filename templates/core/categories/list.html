@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% for message in messages %}
+    {% if message.tags == 'success' %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endif %}
+    {% endfor %}
+   <div class="table-container">
+    <br>
+    <h1 class="title">{{ title2 }}</h1>
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Descripcion</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+      </tr>
+      </thead>
+      <tbody>
+        {% for item in categories %}
+          <tr>
+          <td>{{item.description}}</td>
+          <td>{% if item.state %}
+               ✔
+              {% else %}
+               ➖
+              {% endif %}
+          </td>
+          <td>
+            <a href={% url 'core:update_category' item.id %}>✏️</a>
+            <a href={% url 'core:delete_category' item.id %}>❌</a>
+          </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+     <div class="form-group">
+       <a class="btn blue" href={% url 'core:create_category' %}>Nueva Categoria</a>
+     </div>
+  </div>
+{% endblock content  %}
